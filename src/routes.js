@@ -38,7 +38,7 @@ const Routes = () => (
             <Route 
                 exact 
                 path="/" 
-                component={() => <Link to="/app">Abrir desofuscador</Link>} />
+                component={() => <Redirect to={{ pathname: "/app" }} />} />
 
             <LoginRoute 
                 exact 
