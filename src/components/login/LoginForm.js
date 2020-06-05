@@ -1,10 +1,9 @@
-import React from '../../../node_modules/react';
-import Button from '../../../node_modules/@material-ui/core/Button';
-import { Box } from '../../../node_modules/@material-ui/core';
-import { ValidatorForm, TextValidator} from '../../../node_modules/react-material-ui-form-validator';
-import useStyles from "../../MainCss";
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import { Box } from '@material-ui/core';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
  
-class LoginForm extends React.Component {
+export default class LoginForm extends React.Component {
  
     state = {
         user: {
@@ -26,7 +25,6 @@ class LoginForm extends React.Component {
  
     render() {
         const { user } = this.state;
-        const classes = this.props.classes;
  
         return (
             <ValidatorForm
@@ -37,8 +35,8 @@ class LoginForm extends React.Component {
                     name="usuario" 
                     label="Usuário" 
                     value={user.usuario} 
-                    className={classes.w_100}
                     autoComplete="off"
+                    fullWidth
                     onChange={this.handleChange}
                     validators={['required', 'minStringLength:5']}
                     errorMessages={['Campo obrigatório', 'Usuário incorreto']} 
@@ -50,7 +48,7 @@ class LoginForm extends React.Component {
                     label="Senha"
                     type="password" 
                     value={user.senha} 
-                    className={classes.w_100} 
+                    fullWidth
                     onChange={this.handleChange}
                     validators={['required', 'minStringLength:8']}
                     errorMessages={['Campo obrigatório', 'Senha incorreta']} 
@@ -60,16 +58,16 @@ class LoginForm extends React.Component {
                 <Button 
                     type="submit" 
                     variant="contained" 
-                    color="primary" 
-                    className={classes.w_100}>
+                    fullWidth
+                    color="primary">
                     Entrar
                 </Button>
             </Box>
             <Box mt={1}>
                 <Button 
                     variant="outlined"
-                    href="/createaccount"
-                    className={classes.w_100}>
+                    fullWidth
+                    href="/createaccount">
                     Criar uma conta
                 </Button>
             </Box>
@@ -77,10 +75,3 @@ class LoginForm extends React.Component {
         );
     }
 }
-
-export default () => {
-    const classes = useStyles();
-    return (
-        <LoginForm classes={classes} />
-    );
-};

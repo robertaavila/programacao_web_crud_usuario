@@ -16,54 +16,89 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Box } from '../../../node_modules/@material-ui/core';
+import { Box } from '@material-ui/core';
+
+import MainModal from '../modal/MainModal';
+import UserForm from './UserForm';
 
 class UserList extends Component {
+
+  state = {
+    modal: {
+      open: false,
+      showActions: true,
+      title: '',
+      description: '',
+      body: '',
+      handleConfirm: () => {}
+    },
+    data: this.props.data
+  };
+
   render() {
+    const { modal, data } = this.state;
+
+    const handleConfirmUserDelete = () => {
+      this.setState( {
+        modal: {
+          open: false
+        },
+      });
+    }
+
+    const handleDeleteUser = (event, rowData) => {
+      this.setState( {
+        modal: {
+          open: true,
+          title: `Confirmar exclusão do usuário (${rowData.id})`,
+          description: 'Você tem certeza de que deseja excluir este usuário?',
+          showActions: true,
+          body: '',
+          handleConfirm: handleConfirmUserDelete
+        }
+      });
+    }
+
+    const handleConfirmEditUserCallback = () => {
+      this.setState( { modal: { open: false } });
+    }
+
+    const handleEditUser = (event, rowData) => {
+      this.setState( {
+        modal: {
+          open: true,
+          title: `Editar usuário (${rowData.id})`,
+          showActions: false,
+          body: <UserForm
+                  backButton={false}
+                  userObject={rowData} 
+                  isEdit={true} 
+                  submitHandlerCallback={handleConfirmEditUserCallback} />
+        },
+      })
+    }
+
     return (
       <div style={{ maxWidth: '100%' }}>
+        <MainModal 
+          open={modal.open}
+          title={modal.title}
+          description={modal.description}
+          showActions={modal.showActions}
+          handleConfirm={modal.handleConfirm}
+          body={modal.body} />
+
         <MaterialTable
           icons={this.props.icons}
           title="Lista de usuários"
           columns={[
-            {
-                title: 'ID',
-                field: 'id',
-                type: 'numeric'
-            },
-            { 
-                title: 'Nome',
-                field: 'nome'
-            },
-            { 
-                title: 'Usuário',
-                field: 'usuario' 
-            },
-            {
-                title: 'Senha',
-                field: 'senha'
-            },
-            {
-                title: 'Nível',
-                field: 'nivel'
-            }
+            { title: 'ID', field: 'id', type: 'numeric' },
+            { title: 'Nome', field: 'nome_proprio' },
+            { title: 'Usuário', field: 'usuario' },
+            { title: 'Senha', field: 'senha' },
+            { title: 'Nível', field: 'nivel' }
           ]}
-          data={[
-            {
-                id: 1,
-                nome: 'Rafael Segalla',
-                usuario: 'rrsegalla',
-                senha: '12345678910',
-                nivel: 'ADMIN'
-            },
-            {
-                id: 2,
-                nome: 'Teste',
-                usuario: '123432432',
-                senha: '12345678910',
-                nivel: 'CLIENTE'
-            },
-          ]}
+          data={data}
           localization={{
             pagination: {
                 labelDisplayedRows: '{from}-{to} de {count}',
@@ -97,16 +132,8 @@ class UserList extends Component {
             }
         }}
         actions={[
-            {
-              icon: () => <Edit color="primary" />,
-              tooltip: 'Editar',
-              onClick: (event, rowData) => alert(`Você quer editar o usuário ${rowData.nome}`)
-            },
-            {
-              icon: () => <DeleteIcon color="error" />,
-              tooltip: 'Excluir',
-              onClick: (event, rowData) => alert(`Você quer excluir o usuário ${rowData.nome}`)
-            }
+          { tooltip: 'Editar', icon: () => <Edit color="primary" />, onClick: handleEditUser },
+          { tooltip: 'Excluir', icon: () => <DeleteIcon color="error" />, onClick: handleDeleteUser }
         ]}
         />
       </div>
@@ -134,9 +161,25 @@ export default () => {
         ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
         ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
     };
+
+    const data = [
+      {
+          id: 1,
+          nome_proprio: 'Rafael Segalla',
+          usuario: 'rrsegalla',
+          senha: '12345678910',
+          nivel: 'ADMIN'
+      },
+      {
+          id: 2,
+          nome_proprio: 'Teste',
+          usuario: '123432432',
+          senha: '12345678910',
+          nivel: 'CLIENTE'
+      },
+    ];
+
     return (
-        <Box mt={10} ml={10} mr={10}>
-          <UserList icons={tableIcons} />
-        </Box>
+      <UserList icons={tableIcons} data={data} />
     );
 };

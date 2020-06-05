@@ -1,8 +1,8 @@
-import React from '../../../node_modules/react';
-import { Container } from '../../../node_modules/@material-ui/core';
-import Typography from '../../../node_modules/@material-ui/core/Typography';
-import Card from '../../../node_modules/@material-ui/core/Card';
-import CardContent from '../../../node_modules/@material-ui/core/CardContent';
+import React from 'react';
+import { Container } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import useStyles from "../../MainCss";
 import UserForm from "./UserForm";
 
@@ -31,7 +31,7 @@ const NewUserPage = () => {
                         Criar a sua conta
                     </Typography>
 
-                    <UserForm />
+                    <UserForm backButton={true} />
                 </CardContent>
             </Card>
         </Container>

@@ -1,4 +1,4 @@
-import { makeStyles } from '../node_modules/@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
     w_100: {
@@ -20,6 +20,11 @@ const useStyles = makeStyles({
         textTransform: "uppercase",
         fontFamily: "monospace",
         fontWeight: 700
+    },
+    main_breadcrumb: {
+        paddingTop: "24px",
+        paddingBottom: "25px",
+        paddingLeft: "22px",
     }
 });
 

@@ -1,10 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+
 import { isAuthenticated, isAdmin } from './auth';
 import NewUserPage from './components/user/NewUserPage';
 import LoginPage from './components/login/LoginPage';
 import UserList from './components/user/UserList';
+import Page from './components/Page';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route { ...rest} render={props => (
@@ -29,14 +31,34 @@ const LoginRoute = ({ component: Component, ...rest }) => (
     )} />
 );
 
+const username = "Rafael Segalla";
 const Routes = () => (
     <BrowserRouter>
         <Switch>
-            <Route exact path="/" component={() => <Link to="/app">Abrir desofuscador</Link>} />
-            <LoginRoute exact path="/login" component={() => <LoginPage />} />
-            <PrivateRoute path="/app" component={() => <h1>Você está logado (aqui ficará a funcionalidade de desofuscamento)</h1>} />
-            <PrivateAdminRoute path="/admin/" component={() => <UserList />} />
-            <Route exact path="/createaccount" component={() => <NewUserPage />} />
+            <Route 
+                exact 
+                path="/" 
+                component={() => <Link to="/app">Abrir desofuscador</Link>} />
+
+            <LoginRoute 
+                exact 
+                path="/login/" 
+                component={() => <LoginPage />} />
+
+            <PrivateRoute 
+                path="/app/" 
+                component={() => <Page body={
+                    <p style={{textAlign: "center"}}>(aqui ficará a funcionalidade de desofuscamento)</p>} />
+                } />
+
+            <PrivateAdminRoute 
+                path="/admin/" 
+                component={() => <Page body={<UserList />} />} />
+
+            <LoginRoute 
+                exact 
+                path="/createaccount" 
+                component={() => <NewUserPage />} />
         </Switch>
     </BrowserRouter>
 );
