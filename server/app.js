@@ -1,11 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const taskRouter = require('./routes/user.js');
-const Task = require('./models/user.js');
 
 const app = express();
 
-const port = 3001;
+require('dotenv').config();
+
+const port = process.env.PORTSERVER;
 
 app.use(express.json());
 app.use(cors());
