@@ -1,2 +1,2 @@
-export const isAuthenticated = () => true;
+export const isAuthenticated = () => false;
 export const isAdmin = () => true;

@@ -9,9 +9,6 @@ import UserForm from "./UserForm";
 const NewUserPage = () => {
     const classes = useStyles();
 
-    const handleSubmit = () => {
-        // your submit logic
-    }
     return (
         <Container maxWidth="sm" className={classes.mt_100}>
             <Card>

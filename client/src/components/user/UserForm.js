@@ -2,6 +2,8 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import { Box } from '@material-ui/core';
 import { ValidatorForm, TextValidator} from '../../../node_modules/react-material-ui-form-validator';
+import Alert from '@material-ui/lab/Alert';
+import LinearProgress from '@material-ui/core/LinearProgress';
  
 export default class UserForm extends React.Component {
     state = {
@@ -18,9 +20,12 @@ export default class UserForm extends React.Component {
         }),
         backButton: this.props.backButton,
         isEdit: this.props.isEdit ? this.props.isEdit : false,
-        submitHandlerCallback: this.props.submitHandlerCallback ? this.props.submitHandlerCallback : () => {}
+        submitHandlerCallback: this.props.submitHandlerCallback ? this.props.submitHandlerCallback : () => {},
+        showResult: false,
+        showProgress: false,
+        disableConfirmButton: false,
+        confirmButtonText: this.props.isEdit ? "Salvar" : "Confirmar"
     };
- 
 
     componentDidMount() {
         ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
@@ -43,17 +48,58 @@ export default class UserForm extends React.Component {
     }
  
     handleSubmit = () => {
-        const { submitHandlerCallback } = this.state;
+        const { submitHandlerCallback, user } = this.state;
         submitHandlerCallback();
+
+        const axios = require('axios');
+        const base_url = process.env.REACT_APP_SERVER_URL;
+        let currentState = this.state;
+        if(this.props.isEdit) {
+            // put logic
+        } else {
+            // post logic
+            const post_url = base_url + "user/";
+            axios.post(post_url, user)
+            .then((res) => {
+                if(res.status === 200) {
+                    currentState.showResult = true;
+                    currentState.resultSeverity = 'success';
+                    currentState.resultMessage = 'Usuário criado com sucesso!';
+                    currentState.showProgress = true;
+                    currentState.disableConfirmButton = true;
+                    currentState.confirmButtonText = "Redirecionando...";
+                    currentState.backButton = false;
+                    this.setState(currentState);
+
+                    setTimeout(() => window.location = '/', 3200);
+                }
+            })
+            .catch((err) => {
+                currentState.showResult = true;
+                currentState.resultSeverity = 'error';
+                currentState.resultMessage = 'Ocorreu um erro ao tentar cadastrar!';
+                this.setState(currentState);
+            });
+
+        }
     }
- 
     render() {
         const { user, backButton, isEdit } = this.state;
- 
+
         return (
             <ValidatorForm
                 onSubmit={this.handleSubmit}
+                ref="form"
+                noValidate
             >
+                 {
+                     this.state.showResult ? 
+                     <Box mt={2} mb={2}>
+                        <Alert variant="outlined" severity={this.state.resultSeverity}>
+                            {this.state.resultMessage}
+                        </Alert>
+                     </Box> : ''
+                 }
                  <Box>
                     <TextValidator 
                         name="nome_proprio"
@@ -102,15 +148,21 @@ export default class UserForm extends React.Component {
                         errorMessages={['Campo obrigatório', 'As senhas não correspondem']}
                     />
                 </Box>
+                
                 <Box mt={5}>
                     <Button 
                         type="submit"
+                        disabled={this.state.disableConfirmButton}
                         variant="contained" 
                         color="primary"
                         fullWidth>
-                        { isEdit ? "Salvar" : "Confirmar" }
+                        { this.state.confirmButtonText }
                     </Button>
                 </Box>
+                {
+                    this.state.showProgress ?
+                        <LinearProgress /> : ''
+                }
                 { backButton ? (
                     <Box mt={1}>
                         <Button 
