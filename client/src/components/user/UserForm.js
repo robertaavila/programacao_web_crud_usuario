@@ -8,6 +8,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 export default class UserForm extends React.Component {
     state = {
         user: (this.props.userObject ? {
+            idusuario: this.props.userObject.idusuario,
             nome_proprio: this.props.userObject.nome_proprio,
             usuario: this.props.userObject.usuario,
             senha: this.props.userObject.senha,
@@ -48,14 +49,32 @@ export default class UserForm extends React.Component {
     }
  
     handleSubmit = () => {
-        const { submitHandlerCallback, user } = this.state;
-        submitHandlerCallback();
+        const { user } = this.state;
 
         const axios = require('axios');
         const base_url = process.env.REACT_APP_SERVER_URL;
         let currentState = this.state;
         if(this.props.isEdit) {
             // put logic
+            const idUsuario = user.idusuario;
+            const put_url = base_url + "user/" + idUsuario;
+            axios.put(put_url, user)
+            .then((res) => {
+                if(res.status === 200) {
+                    currentState.showResult = true;
+                    currentState.resultSeverity = 'success';
+                    currentState.resultMessage = 'As informações foram atualizadas!';
+                    this.setState(currentState);
+                    this.state.submitHandlerCallback();
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+                currentState.showResult = true;
+                currentState.resultSeverity = 'error';
+                currentState.resultMessage = 'Ocorreu um erro ao tentar atualizar!';
+                this.setState(currentState);
+            });
         } else {
             // post logic
             const post_url = base_url + "user/";
@@ -70,7 +89,7 @@ export default class UserForm extends React.Component {
                     currentState.confirmButtonText = "Redirecionando...";
                     currentState.backButton = false;
                     this.setState(currentState);
-
+                    this.state.submitHandlerCallback();
                     setTimeout(() => window.location = '/', 3200);
                 }
             })
@@ -85,7 +104,7 @@ export default class UserForm extends React.Component {
         }
     }
     render() {
-        const { user, backButton, isEdit } = this.state;
+        const { user, backButton } = this.state;
 
         return (
             <ValidatorForm
