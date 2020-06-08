@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {check, validationResult} = require('express-validator');
-const User = require('../models/user.js');
+const User = require('../models/user');
 
 router.get('/', (req, res) => {
     User.findAll().then(users => {
