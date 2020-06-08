@@ -4,11 +4,11 @@
 ./package-lock.json
 ./yarn.lock
 **/node_modules
+**.env
 
 # dependencies
 /.pnp
 .pnp.js
-
 
 # testing
 /coverage
