@@ -4,7 +4,6 @@
 ./package-lock.json
 ./yarn.lock
 **/node_modules
-**.env
 
 # dependencies
 /.pnp
@@ -28,3 +27,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea
+client/.env
+server/.env
