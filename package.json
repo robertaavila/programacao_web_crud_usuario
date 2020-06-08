@@ -1,58 +1,16 @@
 {
-  "name": "desofuscador_frontend",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@material-ui/core": "^4.0.0-rc.0",
-    "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "^4.0.0-alpha.55",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "express-validator": "^6.5.0",
-    "material-table": "^1.59.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-hook-form": "^5.7.2",
-    "react-material-ui-form-validator": "^2.0.10",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.1"
-  },
+  "name": "desofuscador",
+  "version": "1.0.0",
+  "description": "",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "frontend": "cd ./client && npm start",
+    "backend": "cd ./server && npm start",
+    "install-all": "cd ./client && npm install && cd.. && cd ./server && npm install"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "index.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://robertaavila@github.com/rafaelsegalla/desofuscador_frontend.git"
+    "url": "git+https://github.com/rafaelsegalla/desofuscador.git"
   },
-  "keywords": [],
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rafaelsegalla/desofuscador_frontend/issues"
-  },
-  "homepage": "https://github.com/rafaelsegalla/desofuscador_frontend#readme"
+  "license": "ISC"
 }
