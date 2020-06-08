@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 import { isAuthenticated, isAdmin } from './auth';
 import NewUserPage from './components/user/NewUserPage';
@@ -31,7 +30,6 @@ const LoginRoute = ({ component: Component, ...rest }) => (
     )} />
 );
 
-const username = "Rafael Segalla";
 const Routes = () => (
     <BrowserRouter>
         <Switch>
