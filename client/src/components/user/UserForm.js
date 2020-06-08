@@ -75,6 +75,7 @@ export default class UserForm extends React.Component {
                 }
             })
             .catch((err) => {
+                console.error(err);
                 currentState.showResult = true;
                 currentState.resultSeverity = 'error';
                 currentState.resultMessage = 'Ocorreu um erro ao tentar cadastrar!';

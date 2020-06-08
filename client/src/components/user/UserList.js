@@ -34,6 +34,28 @@ class UserList extends Component {
     data: this.props.data
   };
 
+  componentDidMount() {
+    let data = [];
+    const base_url = process.env.REACT_APP_SERVER_URL;
+    const get_url = base_url + "user/";
+
+    const axios = require('axios');
+    axios.get(get_url)
+    .then((res) => {
+        if(res.status === 200) {
+          data = res.data.data;
+        }
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .then((res) => {
+      let state = this.state;
+      state.data = data;
+      this.setState(state);
+    });
+  }
+
   render() {
     const { modal, data } = this.state;
 
@@ -43,7 +65,7 @@ class UserList extends Component {
           open: false
         },
       });
-    }
+    };
 
     const handleDeleteUser = (event, rowData) => {
       this.setState( {
@@ -91,11 +113,10 @@ class UserList extends Component {
           icons={this.props.icons}
           title="Lista de usuários"
           columns={[
-            { title: 'ID', field: 'id', type: 'numeric' },
+            { title: 'ID', field: 'idusuario', type: 'numeric' },
             { title: 'Nome', field: 'nome_proprio' },
             { title: 'Usuário', field: 'usuario' },
-            { title: 'Senha', field: 'senha' },
-            { title: 'Nível', field: 'nivel' }
+            { title: 'Senha', field: 'senha' }
           ]}
           data={data}
           localization={{
@@ -161,24 +182,7 @@ export default () => {
         ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
     };
 
-    const data = [
-      {
-          id: 1,
-          nome_proprio: 'Rafael Segalla',
-          usuario: 'rrsegalla',
-          senha: '12345678910',
-          nivel: 'ADMIN'
-      },
-      {
-          id: 2,
-          nome_proprio: 'Teste',
-          usuario: '123432432',
-          senha: '12345678910',
-          nivel: 'CLIENTE'
-      },
-    ];
-
     return (
-      <UserList icons={tableIcons} data={data} />
+      <UserList icons={tableIcons} />
     );
 };

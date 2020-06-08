@@ -65,7 +65,8 @@ router.post('/', [
     if (errors.isEmpty()) {
         User.create({
             nome_proprio: req.body.nome_proprio,
-            description: req.body.description
+            usuario: req.body.usuario,
+            senha: req.body.senha
         }).then(user => {
             return res.json({
                 data: [user]

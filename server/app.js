@@ -6,10 +6,10 @@ const app = express();
 
 require('dotenv').config();
 
-const port = 3000;
+const port = process.env.PORTSERVER;
 
 app.use(express.json());
 app.use(cors());
 app.use(`/user`, taskRouter);
 
-app.listen(port, () => console.log('TODO app running on port ' + port));
+app.listen(port, () => console.log('app running on port ' + port));
