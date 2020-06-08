@@ -5,6 +5,7 @@ const sequelize = require('../db');
 const User = sequelize.define('crud_usuario', {
     idusuario: {
         type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true
     },
     nome_proprio: DataTypes.STRING,

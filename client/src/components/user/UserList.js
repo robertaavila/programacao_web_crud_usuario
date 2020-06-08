@@ -16,7 +16,6 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Box } from '@material-ui/core';
 
 import MainModal from '../modal/MainModal';
 import UserForm from './UserForm';

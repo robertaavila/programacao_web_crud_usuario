@@ -1,6 +1,5 @@
 import React from 'react';
 import MainNav from './nav/MainNav';
-import MainBreadCrumb from './nav/MainBreadCrumb';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
 export default class Page extends React.Component {
@@ -30,7 +29,6 @@ export default class Page extends React.Component {
         return (
             <div>
                 <MainNav />
-                <MainBreadCrumb />
                 { this.props.body }
                 <footer style={style.footerCss}>
                     <div style={style.textCenter}>
